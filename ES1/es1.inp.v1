@@ -1,0 +1,50 @@
+TITLE
+
+* Set the defaults for precision simulations
+DEFAULTS                                                              PRECISIO
+PHYSICS           1.                                                  COALESCE
+PHYSICS           3.                                                  EVAPORAT
+PHOTONUC          1.
+EMFCUT        -5E-05      5E-5      5E-5  HYDROGEN  @LASTMAT          PROD-CUT
+* Define the beam characteristics
+BEAM                             10000.0                           1.0ISOTOPE
+HI-PROPE         55.      137.
+* Define the beam position
+BEAMPOS          0.0       0.0       0.0
+BEAMPOS          0.0        1.                                        SPHE-VOL
+RADDECAY          2.
+GEOBEGIN                                                              COMBNAME
+    0    0          
+* Black body
+SPH blkbody    0.0 0.0 0.0 10000.0
+* Void sphere
+SPH void       0.0 0.0 0.0 1000.
+RCC target     0.0 0.0 100. 0.0 0.0 5.08 2.53
+END
+* Black hole
+BLKBODY      5 +blkbody -void
+* Void around
+VOID         5 +void -target
+* Target
+TARGET       5 +target
+END
+GEOEND
+MATERIAL         58.                6.77                              CERIUM
+MATERIAL          35                3.12                              BROMINE
+* Lantanum Bromure (LaBr3)
+*
+MATERIAL                            5.06                              LaBr3
+COMPOUND         1.0    CERIUM       3.0   BROMINE                    LaBr3
+* ..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
+ASSIGNMA    BLCKHOLE   BLKBODY
+ASSIGNMA         AIR      VOID
+ASSIGNMA       LaBr3    TARGET
+DETECT                    5E-5     0.001                  1.    TARGETdet1
+*USRTRACK          1.    ENERGY      -21.    TARGET               1024.track
+*USRTRACK       0.007       0.0                                         &
+*DCYSCORE         -1.                         track     track          USRTRACK
+* Set the random number seed
+RANDOMIZ          1.
+* Set the number of primary histories to be simulated in the run
+START        100000.
+STOP
