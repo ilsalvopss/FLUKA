@@ -17,8 +17,13 @@ card [**HI-PROPE**](http://www.fluka.org/content/manuals/online/HI-PROPE.html) c
  - *WHAT(1)* = 55
  - *WHAT(2)* = 137
 
+## definizione della geometria
 
- ## definizione del detector
+- parallelepipedo blackhole [**RPP**](http://www.fluka.org/content/manuals/online/RPP.html) [regione `BLKBODY`]
+  - parallelepipedo aria [**RPP**](http://www.fluka.org/content/manuals/online/RPP.html) [regione `AIR`]
+    - cilindretto target [**RCC**](http://www.fluka.org/content/manuals/online/RCC.html) [regione `TARGET`]
+
+## definizione del detector
 
  card [**DETECT**](http://www.fluka.org/content/manuals/online/DETECT.html) con:
   - *WHAT(1)* = -4096
@@ -26,6 +31,12 @@ card [**HI-PROPE**](http://www.fluka.org/content/manuals/online/HI-PROPE.html) c
   - *WHAT(3)* = 0.001
   - *WHAT(6)* = nome della regione target ('TARGET' in questo caso)
 
+## definizione dei materiali
+  - (x2) card [**MATERIAL**](http://www.fluka.org/content/manuals/online/MATERIAL.html) per definire cerio e bromo
+  - card [**MATERIAL**](http://www.fluka.org/content/manuals/online/MATERIAL.html) per definire `CeBr3` come un materiale
+  - card [**COMPOUND**](http://www.fluka.org/content/manuals/online/COMPOUND.html) per definire la composizione di `CeBr3`
+  - (x3) card [**ASSIGNMA**](http://www.fluka.org/content/manuals/online/ASSIGNMA.html) per assegnare *BLCKHOLE*, *AIR* e *CeBr3*, rispettivamente, a `BLKBODY`, `AIR`, `TARGET`
+
 ## post-processing dell'output
 
-l'output di *DETECT* è scritto, non formattato, sull'untità fortran 17 (= fort.17). Per tirarne fuori una lista si usa **DETSUW** (utility contenuta in flutil).
+l'output di *DETECT* è scritto, non formattato, sull'untità fortran 17 (= `fort.17`). Per tirarne fuori una lista si usa `DETSUW` (utility contenuta in *flutil*).
