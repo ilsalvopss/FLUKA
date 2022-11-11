@@ -1,5 +1,7 @@
 # esercizio 1
 
+![Render VTK](render_vtk.png)
+
 Parallelepipedo d'aria contenente:
   - **sorgente** Cs137 puntiforme a emissione isotropa in [0,0,0]
   - **detector** cilindro di raggio 2.53cm e altezza 5.08cm in [0,0,k] con k = {50, 100, 150}
