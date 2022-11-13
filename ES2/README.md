@@ -30,7 +30,7 @@ card [**HI-PROPE**](http://www.fluka.org/content/manuals/online/HI-PROPE.html) c
   - *WHAT(1)* = -4096
   - *WHAT(2)* = 1e-8 (o qualsiasi valore prossimo a 0 purché non 0)
   - *WHAT(3)* = 0.001
-  - *WHAT(6)* = nome della regione target ('TARGET' in questo caso)
+  - *WHAT(6)* = nome della regione target (`TARGET` in questo caso)
 
 ## definizione dei materiali
   - (x2) card [**MATERIAL**](http://www.fluka.org/content/manuals/online/MATERIAL.html) per definire cerio e bromo
@@ -38,7 +38,7 @@ card [**HI-PROPE**](http://www.fluka.org/content/manuals/online/HI-PROPE.html) c
   - card [**MATERIAL**](http://www.fluka.org/content/manuals/online/MATERIAL.html) per definire `Polyprop` come un materiale
   - card [**COMPOUND**](http://www.fluka.org/content/manuals/online/COMPOUND.html) per definire la composizione di `CeBr3`
   - card [**COMPOUND**](http://www.fluka.org/content/manuals/online/COMPOUND.html) per definire la composizione di `Polyprop`
-  - (x3) card [**ASSIGNMA**](http://www.fluka.org/content/manuals/online/ASSIGNMA.html) per assegnare *BLCKHOLE*, *AIR*, *Polyprop* e *CeBr3*, rispettivamente, a `BLKBODY`, `AIR`, `PLASTICA` e `TARGET`
+  - (x4) card [**ASSIGNMA**](http://www.fluka.org/content/manuals/online/ASSIGNMA.html) per assegnare *BLCKHOLE*, *AIR*, *Polyprop* e *CeBr3*, rispettivamente, a `BLKBODY`, `AIR`, `PLASTICA` e `TARGET`
 
 ## post-processing dell'output
 

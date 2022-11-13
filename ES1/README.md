@@ -29,7 +29,7 @@ card [**HI-PROPE**](http://www.fluka.org/content/manuals/online/HI-PROPE.html) c
   - *WHAT(1)* = -4096
   - *WHAT(2)* = 1e-8 (o qualsiasi valore prossimo a 0 purché non 0)
   - *WHAT(3)* = 0.001
-  - *WHAT(6)* = nome della regione target ('TARGET' in questo caso)
+  - *WHAT(6)* = nome della regione target (`TARGET` in questo caso)
 
 ## definizione dei materiali
   - (x2) card [**MATERIAL**](http://www.fluka.org/content/manuals/online/MATERIAL.html) per definire cerio e bromo
