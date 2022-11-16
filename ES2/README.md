@@ -1,11 +1,11 @@
-# esercizio 1
+# esercizio 2
 
 ![Render VTK](render_vtk.png)
 
 Parallelepipedo d'aria contenente:
-  - **sorgente** Cs137 puntiforme a emissione isotropa in [0,0,0]
-  - **detector** cilindro di raggio 2.53cm e altezza 5.08cm in [0,0,k] con k = {50, 100, 150}
-
+  - **sorgente** Cs137 puntiforme a emissione isotropa in [0,0,-1E-9], [0,0,40] e [0,55.0000001,40] (rispettivamente casi **A**,**B** e **C**)
+  - **cilindro** di raggio 55cm e altezza 80cm in polipropilene in [0,0,0]
+  - **detector** cilindro di raggio 2.53cm e altezza 5.08cm in [0,0,80]
 
 ## definizione della sorgente
 
@@ -21,6 +21,7 @@ card [**HI-PROPE**](http://www.fluka.org/content/manuals/online/HI-PROPE.html) c
 
 - parallelepipedo blackhole [**RPP**](http://www.fluka.org/content/manuals/online/RPP.html) [regione `BLKBODY`]
   - parallelepipedo aria [**RPP**](http://www.fluka.org/content/manuals/online/RPP.html) [regione `AIR`]
+    - cilindro polipropilene [**RCC**](http://www.fluka.org/content/manuals/online/RCC.html) [regione `PLASTICA`]
     - cilindretto target [**RCC**](http://www.fluka.org/content/manuals/online/RCC.html) [regione `TARGET`]
 
 ## definizione del detector
@@ -34,8 +35,10 @@ card [**HI-PROPE**](http://www.fluka.org/content/manuals/online/HI-PROPE.html) c
 ## definizione dei materiali
   - (x2) card [**MATERIAL**](http://www.fluka.org/content/manuals/online/MATERIAL.html) per definire cerio e bromo
   - card [**MATERIAL**](http://www.fluka.org/content/manuals/online/MATERIAL.html) per definire `CeBr3` come un materiale
+  - card [**MATERIAL**](http://www.fluka.org/content/manuals/online/MATERIAL.html) per definire `Polyprop` come un materiale
   - card [**COMPOUND**](http://www.fluka.org/content/manuals/online/COMPOUND.html) per definire la composizione di `CeBr3`
-  - (x3) card [**ASSIGNMA**](http://www.fluka.org/content/manuals/online/ASSIGNMA.html) per assegnare *BLCKHOLE*, *AIR* e *CeBr3*, rispettivamente, a `BLKBODY`, `AIR`, `TARGET`
+  - card [**COMPOUND**](http://www.fluka.org/content/manuals/online/COMPOUND.html) per definire la composizione di `Polyprop`
+  - (x4) card [**ASSIGNMA**](http://www.fluka.org/content/manuals/online/ASSIGNMA.html) per assegnare *BLCKHOLE*, *AIR*, *Polyprop* e *CeBr3*, rispettivamente, a `BLKBODY`, `AIR`, `PLASTICA` e `TARGET`
 
 ## post-processing dell'output
 
