@@ -5,7 +5,10 @@ DEFAULTS                                                              PRECISIO
 PHYSICS           1.                                                  COALESCE
 PHYSICS           3.                                                  EVAPORAT
 PHOTONUC          1.
+EMF
 EMFCUT        -1E-06      1E-7         1  HYDROGEN  @LASTMAT          PROD-CUT
+EMFRAY             1       AIR    TARGET
+EMFFLUO            1  HYDROGEN  @LASTMAT
 * Define the beam characteristics
 BEAM                             10000.0                           1.0ISOTOPE
 HI-PROPE         55.      137.
