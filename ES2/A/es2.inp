@@ -47,11 +47,11 @@ ASSIGNMA         AIR       AIR
 ASSIGNMA    Polyprop  PLASTICA
 ASSIGNMA       CeBr3    TARGET
 DETECT         -4096         0     0.001                        TARGETdet1
-*USRBIN            10    ENERGY      -22.       20.       20.      100.bin1
-*USRBIN          -20.      -20.       -1.      100.      100.      100. &
-USRTRACK          1.    ENERGY      -21.    TARGET    102.15     4096.track
-USRTRACK       0.001         0                                         &
-DCYSCORE         -1.                         track     track          USRTRACK
+USRBIN            10    ENERGY      -22.        60        60      100.bin1
+USRBIN           -60       -60       -1.      200.      200.      400. &
+*USRTRACK          1.    ENERGY      -21.    TARGET    102.15     4096.track
+*USRTRACK       0.001         0                                         &
+DCYSCORE         -1.                          bin1      bin1          USRBIN
 * Set the random number seed
 RANDOMIZ          1.
 * Set the number of primary histories to be simulated in the run
