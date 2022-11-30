@@ -36,10 +36,10 @@
 
 L'unico punto di ingresso interessante a questo proposito mi sembra essere la funzione per l'importazione di tomografie (o più in generale di file [*DICOM*](https://it.wikipedia.org/wiki/DICOM)) inclusa in flair. Questa sfrutta la card [**VOXELS**](http://www.fluka.org/content/manuals/online/8.3.html) di cui l'unica documentazione è un programma fortran che converte file di formato sconosciuto in file `vxl`, l'input di geometrie accettato da FLUKA.
 
-Studiando la sorgente di flair (in particolare `Dicom.py`) si intuisce la struttura del file `vxl`: sembra essere la serializzazione in stile fortran di una serie di valori di intestazione (numero di voxel, dimensione dei voxel e altri (TODO)) e di un array a tre dimensioni (di interi a 16bit) contenente la matrice che descrive una geometria a voxel in cui il valore di ogni voxel indica il materiale di cui è composto.
+Studiando la sorgente di flair (in particolare `Dicom.py`) si intuisce la struttura del file `vxl`: sembra essere la serializzazione in stile fortran di una serie di valori di intestazione (numero di voxel, dimensione dei voxel e altri (**TODO**)) e di un array a tre dimensioni (di interi a 16bit) contenente la matrice che descrive una geometria a voxel in cui il valore di ogni voxel indica il materiale di cui è composto.
 
 **TODO** tabella con struttura del formato vxl
 
-  ## conversione da file di mesh 3d
+### conversione da file di mesh 3d
 
-  **TODO**
+**TODO**
