@@ -1,0 +1,62 @@
+TITLE
+
+* Set the defaults for precision simulations
+DEFAULTS                                                              PRECISIO
+PHYSICS           1.                                                  COALESCE
+PHYSICS           3.                                                  EVAPORAT
+PHOTONUC          1.
+EMF
+EMFCUT        -1E-06      1E-7         1  HYDROGEN  @LASTMAT          PROD-CUT
+EMFRAY             1       AIR    TARGET
+EMFFLUO            1  HYDROGEN  @LASTMAT
+* Define the beam characteristics
+!@scale=1.0
+!@color=#00ffff
+BEAM                             10000.0                           1.0ISOTOPE
+HI-PROPE         55.      137.
+* Define the beam position
+BEAMPOS            0         0        40
+BEAMPOS            0        55         0        80                    CYLI-VOL
+RADDECAY          2.
+GEOBEGIN                                                              COMBNAME
+    0    0          
+RPP blkbdy     -65 65 -65 65 -10 110
+RPP airbdy     -60 60 -60 60 -5 100
+RCC plastica   0.0 0.0 0.0 0.0 0.0 80 55
+RCC target     0.0 0.0 80 0.0 0.0 5.08 2.53
+END
+* Black hole
+BLKBODY      5 +blkbdy -airbdy
+* Void around
+AIR          5 +airbdy -target -plastica
+!@alpha=90
+PLASTICA     5 +plastica
+* Target
+TARGET       5 +target
+END
+GEOEND
+MATERIAL         58.                6.77                              CERIUM
+MATERIAL         35.                3.12                              BROMINE
+* (CeBr3)
+*
+MATERIAL                            5.06                              CeBr3
+COMPOUND         1.0    CERIUM       3.0   BROMINE                    CeBr3
+* Polypropylene
+MATERIAL                           0.105                              Polyprop
+COMPOUND         6.0  HYDROGEN       3.0    CARBON                    Polyprop
+* ..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
+ASSIGNMA    BLCKHOLE   BLKBODY
+ASSIGNMA         AIR       AIR
+ASSIGNMA    Polyprop  PLASTICA
+ASSIGNMA       CeBr3    TARGET
+DETECT         -4096         0     0.001                        TARGETdet1
+USRBIN            10    ENERGY      -22.        60        60      100.bin1
+USRBIN           -60       -60       -1.      200.       200      400. &
+*USRTRACK          1.    ENERGY      -21.    TARGET    102.15     4096.track
+*USRTRACK       0.001         0                                         &
+DCYSCORE         -1.                          bin1      bin1          USRBIN
+* Set the random number seed
+RANDOMIZ          1.
+* Set the number of primary histories to be simulated in the run
+START         100000
+STOP
