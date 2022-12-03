@@ -1,0 +1,147 @@
+# flair project file
+Version: 300
+Mode: fluka
+Input: es3.flair
+Page: Input
+plotengine: Gnuplot
+
+# Run information
+Run: <default>
+	Last:     1
+	Status:   3
+	queue:    *Default
+End
+Run: es3_01
+	Rnd:      1
+	Last:     1
+	Status:   3
+	StartRun: 1670004884
+	Parent:   <default>
+	queue:    *Default
+End
+Run: es3_02
+	Rnd:      2
+	Last:     1
+	Status:   3
+	StartRun: 1670004884
+	Parent:   <default>
+	queue:    *Default
+End
+Run: es3_03
+	Rnd:      3
+	Last:     1
+	Status:   3
+	StartRun: 1670004884
+	Parent:   <default>
+	queue:    *Default
+End
+Run: es3_04
+	Rnd:      4
+	Last:     1
+	Status:   3
+	StartRun: 1670004884
+	Parent:   <default>
+	queue:    *Default
+End
+Run: es3_05
+	Rnd:      5
+	Last:     1
+	Status:   3
+	StartRun: 1670004884
+	Parent:   <default>
+	queue:    *Default
+End
+Run: es3_06
+	Rnd:      6
+	Last:     1
+	Status:   3
+	StartRun: 1670004884
+	Parent:   <default>
+	queue:    *Default
+End
+Run: es3_07
+	Rnd:      7
+	Last:     1
+	Status:   3
+	StartRun: 1670004884
+	Parent:   <default>
+	queue:    *Default
+End
+Run: es3_08
+	Rnd:      8
+	Last:     1
+	Status:   3
+	StartRun: 1670004884
+	Parent:   <default>
+	queue:    *Default
+End
+Geometry: Geometry
+	Frame.tsplit: 0.0
+	Frame.vsplit: 1.0
+End
+
+# Plots information
+Plot: Red
+	Type: Geometry
+	basisu: 0 0 1
+	basisv: 1 0 0
+	coord: Z-X
+	extends: 100 77100
+	grid: 0
+	layer: Media
+End
+Plot: Green
+	Type: Geometry
+	basisv: -0 0.157843 0.987464
+	extends: 120 67.5328
+	layer: 3D
+	origin: 2.80292 -48 -22.7737
+End
+Plot: Blue
+	Type: Geometry
+	basisu: 0 0 1
+	coord: Z-Y
+	extends: 100 0.145985
+	layer: Media
+End
+Plot: Magenta
+	Type: Geometry
+	coord: X-Y
+	extends: 100 0.145985
+	layer: Media
+End
+Plot: es3_17_plot
+	Type: USR-1D
+	file.0: es3_17_tab.lis
+	grid: 0
+	lc.0: red
+	lw.0: 2
+	name.0: Detector 1
+	ndetectors: 1
+	title: USR-1D es3 17
+	with.0: histogram
+	x.0: 2
+	xmin: 1
+	xnorm.0: 1/keV
+	y.0: 0
+End
+Plot: es3_22_plot
+	Type: USRBIN
+	bxmax: 60.
+	bxmin: -60.
+	bymax: 60.
+	bymin: -60.
+	bzmax: 45.
+	bzmin: -85.
+	cblog: 1
+	cbtics: 1
+	datafile: es3_22.bnn
+	grid: 0
+	hist: 2D Projection
+	int: 3.0680131228416136E-004
+	max: 5.58103730E-10
+	min: 2.72144169E-15
+	proj: Y
+	swap: 1
+	title: USRBIN es3 22
+End
