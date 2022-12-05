@@ -15,6 +15,11 @@ card [**BEAM**](https://flukafiles.web.cern.ch/manual/chapters/description_input
 
 card [**BEAMPOS**](https://flukafiles.web.cern.ch/manual/chapters/description_input/description_options/beampos.html) con:
   - *WHAT(1)* = 0
+  - *WHAT(2)* = 0
+  - *WHAT(3)* = 40
+
+card [**BEAMPOS**](https://flukafiles.web.cern.ch/manual/chapters/description_input/description_options/beampos.html) con:
+  - *WHAT(1)* = 0
   - *WHAT(2)* = 55
   - *WHAT(3)* = 0
   - *WHAT(4)* = 80
