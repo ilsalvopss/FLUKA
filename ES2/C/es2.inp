@@ -7,6 +7,7 @@ PHYSICS           3.                                                  EVAPORAT
 PHOTONUC          1.
 EMF
 EMFCUT        -1E-06      1E-7         1  HYDROGEN  @LASTMAT          PROD-CUT
+EMFCUT        -1E-06      1E-7                 AIR  @LASTREG
 EMFRAY             1       AIR    TARGET
 EMFFLUO            1  HYDROGEN  @LASTMAT
 #define posY 55.000000000001
@@ -49,7 +50,7 @@ ASSIGNMA    Polyprop  PLASTICA
 ASSIGNMA       CeBr3    TARGET
 DETECT         -4096         0     0.001                        TARGETdet1
 USRBIN            10    ENERGY      -22.        60        60      100.bin1
-USRBIN           -60      -60.       -1.      200.      200.       400 &
+USRBIN           -60      -60.       -1.      400.      400.       400 &
 *USRTRACK          1.    ENERGY      -21.    TARGET    102.15     4096.track
 *USRTRACK       0.001         0                                         &
 DCYSCORE         -1.                          bin1      bin1          USRBIN
