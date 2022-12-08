@@ -1,0 +1,92 @@
+TITLE
+
+* Target position - X
+#define tX 0
+* Target position - Y
+#define tY 0
+* Target position - Z
+#define tZ 80
+* Target height
+#define tH 5.08
+* Target radius
+#define tR 2.53
+* Shielding cylinder radius
+#define sR 3.78
+* Shielding cylinder height
+#define sH 6.5
+* Shielding cylinder empty height
+#define sH1 1.42
+* Shielding cylinder empty Z
+#define s1Z 85.08
+* Set the defaults for precision simulations
+DEFAULTS                                                              PRECISIO
+PHYSICS           1.                                                  COALESCE
+PHYSICS           3.                                                  EVAPORAT
+PHOTONUC          1.
+EMF
+EMFCUT        -1E-06      1E-7         1  HYDROGEN  @LASTMAT          PROD-CUT
+EMFCUT        -1E-06      1E-7      1E-5       AIR  @LASTREG
+EMFRAY             1       AIR  @LASTREG
+EMFFLUO            1  HYDROGEN  @LASTMAT
+* Define the beam characteristics
+!@scale=1
+!@color=#00ffff
+BEAM                             10000.0                           1.0ISOTOPE
+HI-PROPE         55.      137.
+* Define the beam position
+BEAMPOS            0         0        40
+BEAMPOS            0        55         0        80                    CYLI-VOL
+RADDECAY          2.
+GEOBEGIN                                                              COMBNAME
+    0    0          
+RPP blkbdy     -65 65 -65 65 -10 110
+RPP airbdy     -60 60 -60 60 -5 100
+RCC plastica   0.0 0.0 0.0 0.0 0.0 80 55
+RCC target     $tX $tY $tZ 0.0 0.0 $tH $tR
+RCC notarg     $tX $tY $s1Z 0.0 0.0 $sH1 $tR
+RCC shield     $tX $tY $tZ 0.0 0.0 $sH $sR
+END
+* Black hole
+BLKBODY      5 +blkbdy -airbdy
+* Air around
+AIR          5 +airbdy -shield -plastica | +notarg
+PLASTICA     5 +plastica
+* Target
+TARGET       5 +target
+SHIELD       5 -target -notarg +shield
+END
+GEOEND
+MATERIAL         58.                6.77                              CERIUM
+MATERIAL         35.                3.12                              BROMINE
+* (CeBr3)
+*
+MATERIAL                            5.06                              CeBr3
+COMPOUND         1.0    CERIUM       3.0   BROMINE                    CeBr3
+* Polypropylene
+MATERIAL                           0.105                              Polyprop
+COMPOUND         6.0  HYDROGEN       3.0    CARBON                    Polyprop
+* ..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
+ASSIGNMA    BLCKHOLE   BLKBODY
+ASSIGNMA         AIR       AIR
+ASSIGNMA    Polyprop  PLASTICA
+ASSIGNMA       CeBr3    TARGET
+ASSIGNMA        LEAD    SHIELD
+DETECT         -4096         0     0.001                        TARGETdet1
+USRBDX             1    PHOTON       -23  PLASTICA    TARGET          bdx
+USRBDX         0.001         0      4096                               &
+USRBDX             1    PHOTON       -24    SHIELD    TARGET          bdx1
+USRBDX         0.001         0      4096                               &
+USRBDX             1    PHOTON       -25       AIR    TARGET          bdx2
+USRBDX         0.001         0      4096                               &
+USRBIN            10    PHOTON      -22.        60        60      100.bin1
+USRBIN           -60       -60       -1.      200.       200      400. &
+USRTRACK          1.    PHOTON      -21.    TARGET               4096.track
+USRTRACK       0.001         0                                         &
+DCYSCORE         -1.                          bin1      bin1          USRBIN
+DCYSCORE         -1.                           bdx      bdx2          USRBDX
+DCYSCORE         -1.                         track     track          USRTRACK
+* Set the random number seed
+RANDOMIZ          1.
+* Set the number of primary histories to be simulated in the run
+START         100000
+STOP
