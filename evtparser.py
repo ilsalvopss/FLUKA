@@ -28,5 +28,9 @@ for i,a in enumerate(sys.argv):
 
 	vals += parse(a)
 
+vals = [v * 1e6 for v in vals]
+
 plt.hist(vals, bins=1024)
+plt.xlabel("energia depositata [KeV]")
+plt.ylabel("counts")
 plt.show()
