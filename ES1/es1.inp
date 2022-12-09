@@ -42,11 +42,14 @@ ASSIGNMA    BLCKHOLE   BLKBODY
 ASSIGNMA         AIR       AIR
 ASSIGNMA       CeBr3    TARGET
 DETECT         -4096         0     0.001                   1    TARGETdet1
-USRBIN            10    ENERGY      -22.       20.       20.      100.bin1
-USRBIN          -20.      -20.       -1.      100.      100.      100. &
-USRTRACK          1.    ENERGY      -21.    TARGET    102.15     4096.track
-USRTRACK       0.001         0                                         &
-DCYSCORE         -1.                         track     track          USRTRACK
+EVENTBIN       -12.0    ENERGY        29    TARGET                    evtbin
+EVENTBIN      TARGET                             1                     &
+USRBIN            10    ENERGY      -22.        15        15      100.bin1
+USRBIN          -15.       -15       -1.      200.      200.      400. &
+*USRTRACK          1.    ENERGY      -21.    TARGET    102.15     4096.track
+*USRTRACK       0.001         0                                         &
+DCYSCORE         -1.                          bin1      bin1          USRBIN
+DCYSCORE         -1.                        evtbin    evtbin          EVENTBIN
 * Set the random number seed
 RANDOMIZ          1.
 * Set the number of primary histories to be simulated in the run
