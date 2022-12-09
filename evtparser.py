@@ -3,22 +3,23 @@ import matplotlib.pyplot as plt
 
 #WARN: this assumes you're using eventbin with ONLY one bin
 #WARN: truncates results to 1200KeV
-
 def parse(file):
-	f = open(file)
-	vals = []
-	lines = f.readlines()
+	values = []
+	with open(file) as file:
+		expect_value = False
+		for line in file:
+			if "hit cells" in line:
+				n = int(line.split(":")[1])
+				if n > 0:
+					expect_value = True
+					continue
 
-	for i,l in enumerate(lines):
-		if "hit cells" in l:
-			vl = l.split(":")
-			nc = int(vl[1])
-			if nc > 0:
-				lv = lines[i+1].split("1  ")[1]
-				lvn = float(lv)
-				if lvn < 1200*1e-6: #1200KeV
-					vals.append(lvn)
-	return vals
+			if expect_value:
+				lv = float(line.split("1  ")[1])
+				if lv < 1200*1e-6: #1200KeV
+					values.append(lv)
+				expect_value = False
+	return values
 
 vals = []
 for i,a in enumerate(sys.argv):
