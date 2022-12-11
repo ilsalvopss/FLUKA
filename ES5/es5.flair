@@ -1,0 +1,327 @@
+# flair project file
+Version: 300
+Mode: fluka
+md5: b7fa3087e719abbafb2ccd842c29a705
+Input:
+TITLE
+*Target position - X
+#define tX '= 55 + 3.78'
+*Target position - Y
+#define tY 0
+*Target position - Z
+#define tZ 0
+*Target height
+#define tH 5.08
+*Target radius
+#define tR 2.53
+*Shielding cylinder radius
+#define sR 3.78
+*Shielding cylinder height
+#define sH 6.5
+*Shielding cylinder empty height
+#define sH1 1.42
+*Shielding cylinder empty Z
+#define s1Z 5.08
+*Set the defaults for precision simulations
+DEFAULTS PRECISIO
+PHYSICS COALESCE 1.
+PHYSICS EVAPORAT 3.
+PHOTONUC , 1.
+EMF
+EMFCUT PROD-CUT -1E-06 1E-7 1 HYDROGEN @LASTMAT
+EMFCUT , -1E-06 1E-7 1E-5 AIR @LASTREG
+EMFRAY , 1 AIR @LASTREG
+EMFFLUO , 1 HYDROGEN @LASTMAT
+*Define the beam characteristics
+BEAM ISOTOPE,,, 10000.0,,, 1.0
+	scale=1
+	color=#00ffff
+HI-PROPE , 55. 137.
+*Define the beam position
+BEAMPOS , 0 0 40
+BEAMPOS CYLI-VOL 0 55 0 80
+RADDECAY , 2.
+GEOBEGIN COMBNAME
+RPP blkbdy -65 75 -65 65 -10 110
+RPP airbdy -60 70 -60 60 -5 100
+RCC plastica 0.0 0.0 0.0 0.0 0.0 80 55
+RCC target $tX $tY $tZ 0.0 0.0 $tH $tR
+RCC notarg $tX $tY $s1Z 0.0 0.0 $sH1 $tR
+RCC shield $tX $tY $tZ 0.0 0.0 $sH $sR
+END
+*Black hole
+REGION BLKBODY 5
+	+blkbdy -airbdy
+*Air around
+REGION AIR 5
+	+airbdy -shield -plastica | +notarg
+	alpha=90
+REGION PLASTICA 5
+	+plastica
+*Target
+REGION TARGET 5
+	+target
+REGION SHIELD 5
+	-target -notarg +shield
+END
+GEOEND
+MATERIAL CERIUM 58.,, 6.77
+MATERIAL BROMINE 35.,, 3.12
+*(CeBr3)
+*
+MATERIAL CeBr3,,, 5.06
+COMPOUND CeBr3 1.0 CERIUM 3.0 BROMINE
+*Polypropylene
+MATERIAL Polyprop,,, 0.105
+COMPOUND Polyprop 6.0 HYDROGEN 3.0 CARBON
+*..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
+ASSIGNMA , BLCKHOLE BLKBODY
+ASSIGNMA , AIR AIR
+ASSIGNMA , Polyprop PLASTICA
+ASSIGNMA , CeBr3 TARGET
+ASSIGNMA , LEAD SHIELD
+DETECT det1 -4096 0 0.001,,, TARGET
+EVENTBIN evtb -12.0 ENERGY 50 TARGET,,, TARGET,,, 1
+USRBDX bdx 1 ENERGY -23 PLASTICA TARGET,, 0.001 0 4096
+USRBDX bdx1 1 ENERGY -24 SHIELD TARGET,, 0.001 0 4096
+USRBDX bdx2 1 ENERGY -25 AIR TARGET,, 0.001 0 4096
+USRBIN bin1 10 ENERGY -22. 60 60 100. -60 -60 -1. 200. 200 400.
+USRTRACK track 1. ENERGY -21. TARGET,, 4096. 0.001 0
+DCYSCORE USRBIN -1.,,, bin1 bin1
+DCYSCORE USRBDX -1.,,, bdx bdx2
+DCYSCORE USRTRACK -1.,,, track track
+DCYSCORE EVENTBIN -1.,,, evtb evtb
+*Set the random number seed
+RANDOMIZ , 1.
+*Set the number of primary histories to be simulated in the run
+START , 800000
+STOP
+EndInput
+
+Page: Input
+plotengine: Gnuplot
+
+# Run information
+Run: <default>
+	Last:     1
+	Status:   3
+	queue:    *Default
+End
+Run: es5_01
+	Rnd:      1
+	Last:     1
+	Status:   3
+	StartRun: 1670763369
+	Parent:   <default>
+	queue:    *Default
+End
+Run: es5_02
+	Rnd:      2
+	Last:     1
+	Status:   3
+	StartRun: 1670763369
+	Parent:   <default>
+	queue:    *Default
+End
+Run: es5_03
+	Rnd:      3
+	Last:     1
+	Status:   3
+	StartRun: 1670763369
+	Parent:   <default>
+	queue:    *Default
+End
+Run: es5_04
+	Rnd:      4
+	Last:     1
+	Status:   3
+	StartRun: 1670763369
+	Parent:   <default>
+	queue:    *Default
+End
+Run: es5_05
+	Rnd:      5
+	Last:     1
+	Status:   3
+	StartRun: 1670763369
+	Parent:   <default>
+	queue:    *Default
+End
+Run: es5_06
+	Rnd:      6
+	Last:     1
+	Status:   3
+	StartRun: 1670763369
+	Parent:   <default>
+	queue:    *Default
+End
+Run: es5_07
+	Rnd:      7
+	Last:     1
+	Status:   3
+	StartRun: 1670763369
+	Parent:   <default>
+	queue:    *Default
+End
+Run: es5_08
+	Rnd:      8
+	Last:     1
+	Status:   3
+	StartRun: 1670763369
+	Parent:   <default>
+	queue:    *Default
+End
+Geometry: Geometry
+	Layer: 3D
+		3D: 1
+		3D._visible: 1
+		3D.edgedetect: 1
+		3D.projection: 1
+		3D.skip1stblack: 1
+		Options.errors: 0
+		Options.viewport: 0
+		Show: 0
+		Show.lattice: 1
+		Show.voxel: 1
+	End
+End
+
+# Plots information
+Plot: Red
+	Type: Geometry
+	basisu: 0 0 1
+	basisv: 1 0 0
+	coord: Z-X
+	extends: 100 54.3066
+	grid: 0
+	layer: Media
+End
+Plot: Green
+	Type: Geometry
+	basisu: -0.984851 0.139396 0.103136
+	basisv: 0.0289181 -0.454419 0.890319
+	extends: 83.3333 45.2555
+	layer: 3D
+	origin: 34.4351 18.6468 45.1329
+End
+Plot: Blue
+	Type: Geometry
+	basisu: 0 0 1
+	coord: Z-Y
+	extends: 100 54.1606
+	layer: Media
+End
+Plot: Magenta
+	Type: Geometry
+	coord: X-Y
+	extends: 100 54.1606
+	layer: Media
+End
+Plot: es5_17_plot
+	Type: USR-1D
+	file.0: es5_17_tab.lis
+	grid: 0
+	lc.0: royalblue
+	lw.0: 2
+	name.0: Detector 1
+	ndetectors: 1
+	title: USR-1D es5 17
+	with.0: lines
+	x.0: 2
+	xlabel: KeV
+	xmin: 1
+	xnorm.0: 1/keV
+	y.0: 0
+	ylabel: counts/primaries (6400000)
+End
+Plot: es5_21_plot
+	Type: USR-1D
+	file.0: es5_21_tab.lis
+	grid: 0
+	lc.0: red
+	lw.0: 2
+	name.0: Detector 1
+	ndetectors: 1
+	title: USR-1D es5 21
+	x.0: 2
+	xlog: 1
+	y.0: 0
+	ylog: 1
+End
+Plot: es5_22_plot
+	Type: USRBIN
+	bxmax: 60
+	bxmin: -60.
+	bymax: 60
+	bymin: -60.
+	bzmax: 100
+	bzmin: -1.
+	cblog: 1
+	cbtics: 1
+	datafile: es5_22.bnn
+	grid: 0
+	hist: 2D Projection
+	int: 3.0694941948093983E-004
+	max: 4.83585005E-10
+	min: 9.05328126E-14
+	proj: Y
+	swap: 1
+	title: USRBIN es5 22
+End
+Plot: plot confronto bdx
+	Type: USR-1D
+	file.0: es5_23_tab.lis
+	file.1: es5_24_tab.lis
+	file.2: es5_25_tab.lis
+	grid: 0
+	lc.0: red
+	lc.1: blue
+	lc.2: green
+	lw.0: 5
+	lw.1: 4
+	lw.2: 2
+	name.0: plastica -> target
+	name.1: shield -> target
+	name.2: air -> target
+	ndetectors: 3
+	title: USR-1D es5 23
+	with.0: lines
+	with.1: lines
+	with.2: lines
+	x.0: 2
+	xlabel: KeV
+	xmax: 1000
+	xnorm.0: 1/keV
+	xnorm.1: 1/keV
+	xnorm.2: 1/keV
+	y.0: 0
+	y.1: 0
+	y.2: 0
+End
+Plot: es5_24_plot
+	Type: USR-1D
+	file.0: es5_24_tab.lis
+	grid: 0
+	lc.0: red
+	lw.0: 2
+	name.0: Detector 1
+	ndetectors: 1
+	title: USR-1D es5 24
+	x.0: 2
+	xlog: 1
+	y.0: 0
+	ylog: 1
+End
+Plot: es5_25_plot
+	Type: USR-1D
+	file.0: es5_25_tab.lis
+	lc.0: red
+	lw.0: 2
+	name.0: Detector 1
+	ndetectors: 1
+	title: USR-1D es5 25
+	x.0: 2
+	xlog: 1
+	y.0: 0
+	ylog: 1
+End
