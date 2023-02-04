@@ -1,0 +1,219 @@
+# flair project file
+Version: 300
+Mode: fluka
+md5: 251d1712f0480bf0483305fb2ba32324
+Input:
+TITLE
+*Target position - X
+#define tX 0
+*Target position - Y
+#define tY 0
+*Target position - Z
+#define tZ 80
+*Target height
+#define tH 5.08
+*Target radius
+#define tR 2.53
+*Shielding cylinder radius
+#define sR '2.53 + 1.25'
+*Shielding cylinder height
+#define sH 6.5
+*Shielding cylinder empty height
+#define sH1 '6.5 - 5.08'
+*Shielding cylinder empty Z
+#define s1Z '80 + 5.08'
+*Set the defaults for precision simulations
+DEFAULTS PRECISIO
+PHYSICS COALESCE 1.
+PHYSICS EVAPORAT 3.
+PHOTONUC , 1.
+EMF
+EMFCUT PROD-CUT -1E-06 1E-7 1 HYDROGEN @LASTMAT
+EMFCUT , -1E-06 1E-7 1E-5 AIR @LASTREG
+EMFRAY , 1 AIR @LASTREG
+EMFFLUO , 1 HYDROGEN @LASTMAT
+*Define the beam characteristics
+BEAM PHOTON -0.0006617,, 10000.0,,, 1.0
+	scale=1
+	color=#00ffff
+*Define the beam position
+BEAMPOS , 0 0 40
+BEAMPOS CART-VOL 0 110 0 110 0 80
+GEOBEGIN COMBNAME
+RPP blkbdy -210 210 -210 210 -210 210
+RPP airbdy -200 200 -200 200 -200 200
+RPP plastica -55 55 -55 55 0 80
+RCC target $tX $tY $tZ 0.0 0.0 $tH $tR
+RCC notarg $tX $tY $s1Z 0.0 0.0 $sH1 $tR
+RCC shield $tX $tY $tZ 0.0 0.0 $sH $sR
+END
+*Black hole
+REGION BLKBODY 5
+	+blkbdy -airbdy
+	@select=1
+*Air around
+REGION AIR 5
+	+airbdy -shield -plastica | +notarg 
+	alpha=100
+REGION PLASTICA 5
+	+plastica
+*Target
+REGION TARGET 5
+	+target
+REGION SHIELD 5
+	-target -notarg +shield 
+END
+GEOEND
+MATERIAL CERIUM 58.,, 6.77
+MATERIAL BROMINE 35.,, 3.12
+*(CeBr3)
+*
+MATERIAL CeBr3,,, 5.06
+COMPOUND CeBr3 1.0 CERIUM 3.0 BROMINE
+*Polypropylene
+MATERIAL Polyprop,,, 0.105
+COMPOUND Polyprop 6.0 HYDROGEN 3.0 CARBON
+*..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
+ASSIGNMA , BLCKHOLE BLKBODY
+ASSIGNMA , AIR AIR
+ASSIGNMA , Polyprop PLASTICA
+ASSIGNMA , CeBr3 TARGET
+ASSIGNMA , LEAD SHIELD
+DETECT det1 0 0 0.003072,,, TARGET
+*Set the random number seed
+RANDOMIZ , 1.
+*Set the number of primary histories to be simulated in the run
+START , 1.75E8
+STOP
+EndInput
+
+Page: Input
+plotengine: Gnuplot
+
+# Run information
+Run: <default>
+	Last:     1
+	Status:   3
+	StartRun: 1671215816
+	queue:    *Default
+End
+Run: es4_01
+	Rnd:      1
+	Last:     1
+	Status:   3
+	StartRun: 1675161225
+	Parent:   <default>
+	queue:    *Default
+End
+Run: es4_02
+	Rnd:      2
+	Last:     1
+	Status:   3
+	StartRun: 1675161225
+	Parent:   <default>
+	queue:    *Default
+End
+Run: es4_03
+	Rnd:      3
+	Last:     1
+	Status:   3
+	StartRun: 1675161225
+	Parent:   <default>
+	queue:    *Default
+End
+Run: es4_04
+	Rnd:      4
+	Last:     1
+	Status:   3
+	StartRun: 1675161225
+	Parent:   <default>
+	queue:    *Default
+End
+Geometry: Geometry
+	Layer: Borders
+		Show.color: None
+	End
+	Layer: Media
+		Options.shortcut: F3
+		Options.viewport: 0
+		Palette: 1
+		Palette._visible: 1
+		Palette.cpd: 0
+		Palette.max: 1e-08
+		Palette.min: 1e-14
+		Usrbin._visible: 1
+		Usrbin.file: es4_22.bnn
+	End
+	Layer: 3D
+		3D: 1
+		3D._visible: 1
+		3D.edgedetect: 1
+		3D.projection: 1
+		3D.skip1stblack: 1
+		Options.errors: 0
+		Options.grid: 0
+		Options.viewport: 0
+		Palette._visible: 1
+		Palette.cpd: 0
+		Palette.max: 1e-08
+		Palette.min: 1e-14
+		Show: 0
+		Show.lattice: 1
+		Show.voxel: 1
+		Usrbin._visible: 1
+		Usrbin.file: es4_22.bnn
+		Usrbin.prompt: 1
+	End
+End
+
+# Plots information
+Plot: Red
+	Type: Geometry
+	basisu: 0 0 1
+	basisv: 1 0 0
+	coord: Z-X
+	extends: 364.2 197.785
+	grid: 0
+	layer: Media
+	origin: -2.93742 0 42.6081
+End
+Plot: Green
+	Type: Geometry
+	basisu: -0.971009 0.0336518 0.236664
+	basisv: 0.135462 -0.738268 0.660765
+	extends: 83.3338 45.2557
+	layer: 3D
+	origin: 13.1099 -7.95034 61.3948
+End
+Plot: Blue
+	Type: Geometry
+	basisu: 0 0 1
+	coord: Z-Y
+	extends: 139.541 75.5762
+	layer: Media
+	origin: 0 3.39877 66.5098
+End
+Plot: Magenta
+	Type: Geometry
+	coord: X-Y
+	extends: 144 77.9912
+	layer: Media
+	origin: 3.38746 -4.85847 0
+End
+Plot: es4_17_plot
+	Type: USR-1D
+	file.0: es4_17_tab.lis
+	grid: 0
+	lc.0: red
+	lw.0: 2
+	name.0: Detector 1
+	ndetectors: 1
+	title: USR-1D es4 17
+	with.0: lines
+	x.0: 2
+	xmax: 700
+	xmin: 10
+	xnorm.0: 1/keV
+	y.0: 0
+	ylog: 1
+End
