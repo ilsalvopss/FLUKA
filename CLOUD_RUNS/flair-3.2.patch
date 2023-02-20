@@ -1,0 +1,152 @@
+Index: flair.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/flair.py b/flair.py
+--- a/flair.py	(revision 1b97e738d4c99bb4c009c72b3e1a0d85bee3e631)
++++ b/flair.py	(date 1674168485580)
+@@ -3322,32 +3322,36 @@
+ 	# Initialise options
+ 	Element.init(os.path.join(tkFlair.prgDir, "db/isotopes.ini"))
+ 	loadMaterialIni()
+-	tkFlair.init(ini)
+ 	inputs.init()
+ 
+-	# ---------------------------------------------
+-	# FIXME maybe move to deckinput.Input.__init__
+-	# Do aliases of all icons
+-	# ---------------------------------------------
+-	for cinfo in CardInfo.allcards():
+-		if cinfo.icon:
+-			try:
+-				icons.alias(cinfo.tag, cinfo.icon)
+-			except KeyError:
+-				cinfo.icon = None
++	if root:
++		tkFlair.init(ini)
++
++		# ---------------------------------------------
++		# FIXME maybe move to deckinput.Input.__init__
++		# Do aliases of all icons
++		# ---------------------------------------------
++		for cinfo in CardInfo.allcards():
++			if cinfo.icon:
++				try:
++					icons.alias(cinfo.tag, cinfo.icon)
++				except KeyError:
++					cinfo.icon = None
+ 
+-	# ---------------------------------------------
+-	# Load all recent directories to history of bFileDialog
+-	# ---------------------------------------------
+-	for i in range(tkFlair._maxRecent):
+-		try: filename = tkFlair.getRecent(i)
+-		except: continue
+-		if not filename: break
+-		try:
+-			bFileDialog.FileDialog.append2History(
+-				os.path.dirname(os.path.abspath(filename)))
+-		except:
+-			pass
++		# ---------------------------------------------
++		# Load all recent directories to history of bFileDialog
++		# ---------------------------------------------
++		for i in range(tkFlair._maxRecent):
++			try:
++				filename = tkFlair.getRecent(i)
++			except:
++				continue
++			if not filename: break
++			try:
++				bFileDialog.FileDialog.append2History(
++					os.path.dirname(os.path.abspath(filename)))
++			except:
++				pass
+ 
+ #===============================================================================
+ # Main subroutine
+@@ -3360,49 +3364,56 @@
+ 	# Start buffering output in case of error message
+ 	log.buffering()
+ 
+-	#tk.NoDefaultRoot()
+-	try:
+-		root = tk.Tk()
+-	except tk.TclError as ex:
+-		print(ex, file=sys.stderr)
+-		sys.exit(-1)
+-
+-	root.title(tkFlair.__program__)
+-	tk.CallWrapper = tkFlair.CallWrapper
+-	tkExtra.changeBehaviourTextClasses(root)
+-	root.withdraw()
+-
+ 	# Check for alternative ini file
+ 	ini = None
+-	for opt in ("-i","--ini"):
++	for opt in ("-i", "--ini"):
+ 		if opt in sys.argv:
+ 			try:
+-				ini = sys.argv[sys.argv.index(opt)+1]
++				ini = sys.argv[sys.argv.index(opt) + 1]
+ 				break
+ 			except IndexError:
+ 				pass
+ 
+-	# Initialise options
+-	initialize()
+-	tkFlair.addOptions(tkFlair.__program__, root)
+-	tkFlair.addOptions(tkFlair._FONT_SECTION, root)
+-	tkFlair.addOptions(tkFlair._COLOR_SECTION, root)
++	#tk.NoDefaultRoot()
++	try:
++		root = tk.Tk()
++
++		root.title(tkFlair.__program__)
++		tk.CallWrapper = tkFlair.CallWrapper
++		tkExtra.changeBehaviourTextClasses(root)
++		root.withdraw()
+ 
+-	# Check for dependencies
+-	if not GeometryEditor.installed():
+-		log.warning("Geometry Viewer not found")
+-		log.error(GeometryEditor.geoviewer_error())
++		# Check for dependencies
++		if not GeometryEditor.installed():
++			log.warning("Geometry Viewer not found")
++			log.error(GeometryEditor.geoviewer_error())
+ 
+-	if not GeometryEditor.PILInstalled():
+-		log.warning("PIL.Image and PIL.ImageTk not found")
++		if not GeometryEditor.PILInstalled():
++			log.warning("PIL.Image and PIL.ImageTk not found")
++	except tk.TclError as ex:
++		# here we couldn't initialize Tk
+ 
++		print(ex, file=sys.stderr)
++		sys.exit(-1)
++
++	# Initialise options
++	initialize()
+ 	project,view = parseArgs(sys.argv[1:])
+-	if project.filename: tkFlair.addRecent(project.abspath())
++
++	if root:
++		tkFlair.addOptions(tkFlair.__program__, root)
++		tkFlair.addOptions(tkFlair._FONT_SECTION, root)
++		tkFlair.addOptions(tkFlair._COLOR_SECTION, root)
++
++		if project.filename:
++			tkFlair.addRecent(project.abspath())
+ 
+ 	flair = Flair(root, project, view)
+ 	postParseArg(sys.argv[1:], flair)
+ 
+-	if not tkFlair._SKIP_INTRO: tkFlair.aboutDialog(flair, 2500)
++	if root and not tkFlair._SKIP_INTRO:
++		tkFlair.aboutDialog(flair, 2500)
++
+ 	flair.checkFluka()
+ 	#flair.checkMoira()
+ 	Manual.init([	("", os.path.join(tkFlair.prgDir,"manual")),

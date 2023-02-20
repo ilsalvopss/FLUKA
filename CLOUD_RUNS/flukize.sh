@@ -36,3 +36,10 @@ if [ $? -ne 0 ]
 fi
 
 #TODO: apply flair patch
+
+patch -d /usr/local/flair flair-3.2.patch
+
+if [ $? -ne 0 ]
+  then
+    fatal "!!failed to patch flair!!"
+fi
