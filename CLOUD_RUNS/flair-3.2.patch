@@ -5,8 +5,18 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/flair.py b/flair.py
 --- a/flair.py	(revision 1b97e738d4c99bb4c009c72b3e1a0d85bee3e631)
-+++ b/flair.py	(date 1674168485580)
-@@ -3322,32 +3322,36 @@
++++ b/flair.py	(date 1676923816182)
+@@ -233,7 +233,8 @@
+ class FlairTabRibbonFrame(Ribbon.TabRibbonFrame):
+ 	# ----------------------------------------------------------------------
+ 	def __init__(self, master, mastertab=None, **kw):
+-		super().__init__(master, mastertab, **kw)
++		if master is not None:
++			super().__init__(master, mastertab, **kw)
+ 		self._inundo = False
+ 
+ 		self.createNotify()
+@@ -3322,32 +3323,36 @@
  	# Initialise options
  	Element.init(os.path.join(tkFlair.prgDir, "db/isotopes.ini"))
  	loadMaterialIni()
@@ -66,7 +76,7 @@ diff --git a/flair.py b/flair.py
  
  #===============================================================================
  # Main subroutine
-@@ -3360,49 +3364,56 @@
+@@ -3360,49 +3365,56 @@
  	# Start buffering output in case of error message
  	log.buffering()
  
