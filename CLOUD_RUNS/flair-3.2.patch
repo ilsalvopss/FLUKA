@@ -5,7 +5,7 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 ===================================================================
 diff --git a/flair.py b/flair.py
 --- a/flair.py	(revision 1b97e738d4c99bb4c009c72b3e1a0d85bee3e631)
-+++ b/flair.py	(date 1676923816182)
++++ b/flair.py	(date 1676924635275)
 @@ -233,7 +233,8 @@
  class FlairTabRibbonFrame(Ribbon.TabRibbonFrame):
  	# ----------------------------------------------------------------------
@@ -16,12 +16,115 @@ diff --git a/flair.py b/flair.py
  		self._inundo = False
  
  		self.createNotify()
-@@ -3322,32 +3323,36 @@
+@@ -687,22 +688,23 @@
+ 	# Initialize Flair
+ 	#----------------------------------------------------------------------
+ 	def __init__(self, master=None, project=None, view=None):
+-		super().__init__(master, class_="flair")
++		if master:
++			super().__init__(master, class_="flair")
+ 
+-		try:
+-			geom = "%sx%s" % (tkFlair.config.get(tkFlair.__program__, "width"),
+-					  tkFlair.config.get(tkFlair.__program__, "height"))
+-		except configparser.NoOptionError:
+-			geom = "900x700"
+-		try:
+-			self.geometry(geom)
+-		except tk.TclError:
+-			pass
++			try:
++				geom = "%sx%s" % (tkFlair.config.get(tkFlair.__program__, "width"),
++						  tkFlair.config.get(tkFlair.__program__, "height"))
++			except configparser.NoOptionError:
++				geom = "900x700"
++			try:
++				self.geometry(geom)
++			except tk.TclError:
++				pass
+ 
+-		try:
+-			self.tk.call('wm','iconphoto',self._w, icons.get("flair32"))
+-		except tk.TclError:
+-			self.iconbitmap(f"@{tkFlair.prgDir}/icons/flair32.xbm")
++			try:
++				self.tk.call('wm','iconphoto',self._w, icons.get("flair32"))
++			except tk.TclError:
++				self.iconbitmap(f"@{tkFlair.prgDir}/icons/flair32.xbm")
+ 
+ 		self.log            = None
+ 		self.geometryPage   = None
+@@ -729,22 +731,24 @@
+ 			self.project = project
+ 			self._scanProjectDirs()
+ 
+-		# Custom Tab
+-		self.tabs = FlairTabRibbonFrame(self)
+-		self.tabs.create(self)
+-		self.tabs.pack(side=tk.TOP, fill=tk.BOTH, expand=tk.YES)
++		if master:
++			# Custom Tab
++			self.tabs = FlairTabRibbonFrame(self)
++			self.tabs.create(self)
++			self.tabs.pack(side=tk.TOP, fill=tk.BOTH, expand=tk.YES)
+ 
+-		# Create frame
+-		self.refreshTitle()
++			# Create frame
++			self.refreshTitle()
+ 
+-		self.inputPage    = self.tabs.pages["Input"]
+-		self.viewerPage   = self.tabs.pages["Viewer"]
+-		self.geometryPage = self.tabs.pages["Geometry"]
+-		self.outputPage   = self.tabs.pages["Output"]
++			self.inputPage    = self.tabs.pages["Input"]
++			self.viewerPage   = self.tabs.pages["Viewer"]
++			self.geometryPage = self.tabs.pages["Geometry"]
++			self.outputPage   = self.tabs.pages["Output"]
+ 
++			self.log = self.newLog("flair", "flair")
++
+ 		# Check if there are messages in the output
+ 		errors = bool(log.buffer())
+-		self.log = self.newLog("flair","flair")
+ 		log.set(self.log)
+ 
+ 		if view:
+@@ -755,15 +759,17 @@
+ 		# do not double flush the messages when in developer mode
+ 		if Global.developer: log.stopBuffering()
+ 		self.flush()
+-		self.after_idle(self.tabs.refresh)
++
++		if master:
++			self.after_idle(self.tabs.refresh)
+ 
+-		self.protocol("WM_DELETE_WINDOW", self.close)
+-		self.bind("<<Output>>",           self.showOutput)
+-		self.bind("<<Preferences>>",      self.preferences)
++			self.protocol("WM_DELETE_WINDOW", self.close)
++			self.bind("<<Output>>",           self.showOutput)
++			self.bind("<<Preferences>>",      self.preferences)
+ 
+-		# focusIn semaphore
+-		self._inFocus = False
+-		self.bind("<FocusIn>", self.focusIn)
++			# focusIn semaphore
++			self._inFocus = False
++			self.bind("<FocusIn>", self.focusIn)
+ 
+ 		if errors:
+ 			self.errorsDuringLoading()
+@@ -3322,32 +3328,36 @@
  	# Initialise options
  	Element.init(os.path.join(tkFlair.prgDir, "db/isotopes.ini"))
  	loadMaterialIni()
 -	tkFlair.init(ini)
- 	inputs.init()
+-	inputs.init()
++	inputs.init()
++
++	if root:
++		tkFlair.init(ini)
  
 -	# ---------------------------------------------
 -	# FIXME maybe move to deckinput.Input.__init__
@@ -33,9 +136,6 @@ diff --git a/flair.py b/flair.py
 -				icons.alias(cinfo.tag, cinfo.icon)
 -			except KeyError:
 -				cinfo.icon = None
-+	if root:
-+		tkFlair.init(ini)
-+
 +		# ---------------------------------------------
 +		# FIXME maybe move to deckinput.Input.__init__
 +		# Do aliases of all icons
@@ -76,7 +176,7 @@ diff --git a/flair.py b/flair.py
  
  #===============================================================================
  # Main subroutine
-@@ -3360,49 +3365,56 @@
+@@ -3360,49 +3370,56 @@
  	# Start buffering output in case of error message
  	log.buffering()
  
