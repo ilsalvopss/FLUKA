@@ -37,7 +37,7 @@ fi
 
 #TODO: apply flair patch
 
-patch -d /usr/local/flair flair-3.2.patch
+sudo patch -d /usr/local/flair < flair-3.2.patch
 
 if [ $? -ne 0 ]
   then
