@@ -12,11 +12,11 @@ fatal(){
 
 if [ -z "$1" ]
   then
-    fatal "no FLUKA deb provided, specify it as first argument"
+    fatal "no FLUKA deb provided, specify it as first argument. (download it from https://fluka.cern/download/latest-fluka-release)"
 fi
 
 # install FLUKA deb
-sudo apt install $1
+sudo apt install ./$1
 
 if [ $? -ne 0 ]
   then
