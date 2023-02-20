@@ -10,9 +10,19 @@ fatal(){
   exit 1
 }
 
+sudo apt update
+
 if [ -z "$1" ]
   then
     fatal "no FLUKA deb provided, specify it as first argument. (download it from https://fluka.cern/download/latest-fluka-release)"
+fi
+
+# install gfortran
+sudo apt install gfortran
+
+if [ $? -ne 0 ]
+  then
+    fatal "apt failed to install gfortran"
 fi
 
 # install FLUKA deb
