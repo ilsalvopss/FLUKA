@@ -10,4 +10,4 @@ if [ -z "$1" ]
 fi
 
 export PATH=$PATH:/usr/local/fluka/bin
-flair --run "<default>" project.flair $1
+flair --run "<default>" $1
