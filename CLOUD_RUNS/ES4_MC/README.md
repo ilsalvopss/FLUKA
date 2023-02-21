@@ -1,6 +1,7 @@
 # run su DigitalOcean con 7 * 10^8 decadimenti di es4
 
 ![Render](es4_cloud.png)
+![Spectra](Mc_resolution.png)
 
 ## geometria
 
